@@ -33,7 +33,7 @@ const App = () => {
   useEffect(() => {
     setInterval(() => {
       res();
-    }, 3000);
+    }, 60000);
   }, []);
 
   useEffect(() => {

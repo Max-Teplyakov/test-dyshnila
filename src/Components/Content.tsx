@@ -6,6 +6,7 @@ const logo = require("../images/logo.png");
 
 const Content: FC<{ result: IResult }> = ({ result }) => {
   const [indicators, setIndicators] = useState("");
+  const [text, setText] = useState("");
   const status = useAppSelector((state) => state.indicator.indicator);
 
   useEffect(() => {
@@ -24,8 +25,10 @@ const Content: FC<{ result: IResult }> = ({ result }) => {
           setIndicators("CO2 превышает норму");
         }
       }
+      setText("Душнила не доволен вами");
     } else {
       setIndicators("Все показатели в норме");
+      setText("Душнила доволен вами");
     }
   }, [status, result]);
 
@@ -49,7 +52,7 @@ const Content: FC<{ result: IResult }> = ({ result }) => {
             letterSpacing: -6,
           }}
         >
-          Душнила доволен вами
+          {text}
         </p>
         <p
           style={{
