@@ -1,9 +1,33 @@
+import { FC, useEffect, useState } from "react";
 import { useAppSelector } from "../hooks";
+import { IResult } from "../interfaces";
 
 const logo = require("../images/logo.png");
 
-export default function Content() {
+const Content: FC<{ result: IResult }> = ({ result }) => {
+  const [indicators, setIndicators] = useState("");
   const status = useAppSelector((state) => state.indicator.indicator);
+
+  useEffect(() => {
+    if (status === false) {
+      if (Number(result.temp) > 27) {
+        if (Number(result.co2) > 800) {
+          setIndicators("CO2 и Температура превышает норму");
+        } else {
+          setIndicators("Температура превышает норму");
+        }
+      }
+      if (Number(result.co2) > 800) {
+        if (Number(result.temp) > 27) {
+          setIndicators("CO2 и Температура превышает норму");
+        } else {
+          setIndicators("CO2 превышает норму");
+        }
+      }
+    } else {
+      setIndicators("Все показатели в норме");
+    }
+  }, [status, result]);
 
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: 41 }}>
@@ -36,7 +60,7 @@ export default function Content() {
             lineHeight: "100%",
           }}
         >
-          Все показатели в норме
+          {indicators}
         </p>
       </div>
       <div
@@ -121,4 +145,6 @@ export default function Content() {
       </div>
     </div>
   );
-}
+};
+
+export default Content;

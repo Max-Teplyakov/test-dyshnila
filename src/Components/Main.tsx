@@ -1,7 +1,9 @@
+import { FC } from "react";
 import Content from "./Content";
 import Result from "./Result";
+import { IResult } from "../interfaces";
 
-export default function Main() {
+const Main: FC<{ result: IResult }> = ({ result }) => {
   return (
     <div
       style={{
@@ -10,8 +12,10 @@ export default function Main() {
         gap: 41,
       }}
     >
-      <Content />
-      <Result />
+      <Content result={result} />
+      <Result result={result} />
     </div>
   );
-}
+};
+
+export default Main;

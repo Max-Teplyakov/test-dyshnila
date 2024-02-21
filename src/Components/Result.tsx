@@ -1,53 +1,9 @@
-import { useEffect, useState } from "react";
-import { useAppDispatch, useAppSelector } from "../hooks";
-import { addIndicator } from "../store/IndicatorsSlice";
+import { FC } from "react";
+import { useAppSelector } from "../hooks";
+import { IResult } from "../interfaces";
 
-interface IResult {
-  co2: string;
-  temp: string;
-}
-
-const initialState: IResult = {
-  co2: "0",
-  temp: "0",
-};
-
-export default function Result() {
-  const [result, setResult] = useState<IResult>(initialState);
-
-  const dispatch = useAppDispatch();
+const Result: FC<{ result: IResult }> = ({ result }) => {
   const status = useAppSelector((state) => state.indicator.indicator);
-
-  const res = () => {
-    fetch("http://dushnila.gooddelo.com/data").then((res) =>
-      res
-        .json()
-        .then((data) => {
-          setResult(data);
-        })
-        .catch((err) => {
-          console.log(err);
-        })
-    );
-  };
-
-  useEffect(() => {
-    res();
-  }, []);
-
-  useEffect(() => {
-    setInterval(() => {
-      res();
-    }, 60000);
-  }, []);
-
-  useEffect(() => {
-    if (Number(result.temp) > 27 || Number(result.co2) > 800) {
-      dispatch(addIndicator(false));
-    } else {
-      dispatch(addIndicator(true));
-    }
-  }, [result]);
 
   return (
     <div
@@ -107,4 +63,6 @@ export default function Result() {
       </div>
     </div>
   );
-}
+};
+
+export default Result;

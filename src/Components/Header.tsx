@@ -1,4 +1,4 @@
-export default function Header() {
+const Header = () => {
   return (
     <h1
       style={{
@@ -14,4 +14,6 @@ export default function Header() {
       Душнила
     </h1>
   );
-}
+};
+
+export default Header;
